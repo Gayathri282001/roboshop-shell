@@ -22,32 +22,32 @@ VALIDATE(){
     then
         echo -e "$2 ... $R FAILURE $N"
         exit 1
-          else
+    else
         echo -e "$2 ... $G SUCCESS $N"
     fi
 }
 
+
 cp mongo.repo /etc/yum.repos.d/mongo.repo &>> $LOGFILE
 
-VALIDATE $? "copied mongodb repo into yum.mongo.d"
+VALIDATE $? "Copied MongoDB repo into yum.repos.d"
 
 yum install mongodb-org -y &>> $LOGFILE
 
-VALIDATE $? "INSTALLING mongoDB..."
+VALIDATE $? "Installation of MongoDB"
 
 systemctl enable mongod &>> $LOGFILE
 
-VALIDATE $? "Enbiling mongoDB....."
+VALIDATE $? "Enabling MongoDB"
 
 systemctl start mongod &>> $LOGFILE
 
-VALIDATE $? "Starting mongodb....."
+VALIDATE $? "Starting MongoDB"
 
 sed -i 's/127.0.0.1/0.0.0.0/' /etc/mongod.conf &>> $LOGFILE
 
-VALIDATE $? "edited mongodb configuration..."
+VALIDATE $? "Edited MongoDB conf"
 
 systemctl restart mongod &>> $LOGFILE
 
-VALIDATE $? "restarting mongodb..."
-
+VALIDATE $? "Restarting MonogoDB"
